@@ -19,32 +19,57 @@ namespace ColorChanger
 {
     public partial class Form1 : Form
     {
-       
+        void SetupSelections()
+        {
+            string[] vars = { "PrimaryColor", "SecondaryColor", "TertiaryColor", "SpecialTxt", "DialogueBase", "DialogueHighlight", "DialogueHighlightHistory", "CombatLogEnemy", "CombatLogAlly", "RollSuccess", "RollFailure", "ItemRarityColour.Uncommon", "ItemRarityColour.Rare", "ItemRarityColour.VeryRare", "ItemRarityColour.Legendary", "ApprovalNegative", "ApprovalNeutral", "ApprovalPositive", "ProficiencyAbility" };
+            for (int i = 0; i < vars.Length; i++)
+            {
+                ValuesListBox.Items.Add(vars[i]);
+            }
+        }
+        public static string Base64Encode(string plainText)
+        {
+            if (plainText != null)
+            {
+                var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+                return System.Convert.ToBase64String(plainTextBytes);
+            }
+            else return "";
+
+        }
+        void MakePreset(string filename)
+        {
+            string thingtoencode = "";
+            for (int i = 0; i < 19; i++)
+            {
+                thingtoencode = thingtoencode + docc.ChildNodes[0].ChildNodes[i].ChildNodes[0].Value;
+            }
+            thingtoencode = Base64Encode(thingtoencode);
+            File.WriteAllText("CustomPresets\\" + filename, thingtoencode);
+        }
+        public static string Base64Decode(string base64EncodedData)
+        {
+            if (base64EncodedData != null)
+            {
+                var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
+                return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+            }
+            else return "";
+        }
+
         Color currentcolor;
-        int mapindex = -1;
-        string selectedfile = "";
         XmlDocument docc = new XmlDocument();
-        XmlDocument cclib = new XmlDocument();
         public Form1()
         {
             InitializeComponent();
+            System.IO.Directory.CreateDirectory("CustomPresets");
             label1.Text = "#000000";
             currentcolor = colorDialog1.Color;
-            docc.Load("DefaultTheme.Colours.xaml");
-            cclib.Load("CCLib.xaml");
-            for (int i = 0; i < docc.ChildNodes[0].ChildNodes.Count; i++)
-            {
-                listBox1.Items.Add(docc.ChildNodes[0].ChildNodes[i].Attributes[0].InnerText);
-            }
-            for (int i = 0; i < cclib.ChildNodes[0].ChildNodes.Count; i++)
-            {
-                if (cclib.ChildNodes[0].ChildNodes[i].Name == "SolidColorBrush")
-                {
-                    listBox2.Items.Add(cclib.ChildNodes[0].ChildNodes[i].Attributes[0].Value);
-                }
-                
-            }
-            System.IO.Directory.CreateDirectory("CustomPresets");
+            docc.Load("Colorful Words Master.xaml");
+            SetupSelections();
+
+            
+            
 
         }
 
@@ -68,52 +93,20 @@ namespace ColorChanger
         private void LoadXAML_Click(object sender, EventArgs e)
         {
             
-            
-            if (mapindex == -1)
+            if (ValuesListBox.SelectedIndex == -1)
             {
-                docc.ChildNodes[0].ChildNodes[32].ChildNodes[0].Value = label1.Text;
+                MessageBox.Show("Select a value to change first >:(");
             }
             else
             {
-                if (selectedfile == "DefaultTheme.Colours.xaml")
-                {
-                    if (docc.ChildNodes[0].ChildNodes[mapindex].Name == "SolidColorBrush")
-                    {
-                        if (docc.ChildNodes[0].ChildNodes[mapindex].ChildNodes.Count == 0)
-                        {
-                            if (docc.ChildNodes[0].ChildNodes[mapindex].Attributes.Count == 3)
-                            {
-                                docc.ChildNodes[0].ChildNodes[mapindex].Attributes[2].Value = label1.Text;
-                            }
-                            else docc.ChildNodes[0].ChildNodes[mapindex].Attributes[1].Value = label1.Text;
-                        }
-                        else
-                        {
-                            docc.ChildNodes[0].ChildNodes[mapindex].ChildNodes[0].Value = label1.Text;
-                        }
-
-                    }
-                    else docc.ChildNodes[0].ChildNodes[mapindex].ChildNodes[0].Value = label1.Text;
-                }
-                if (selectedfile == "CCLib.xaml")
-                {
-                    cclib.ChildNodes[0].ChildNodes[mapindex].Attributes[1].Value = label1.Text;
-                }
-
-
-
-            }
-            if (selectedfile == "DefaultTheme.Colours.xaml")
-            {
-                docc.Save("DefaultTheme.Colours.xaml");
-            }
-            if (selectedfile == "CCLib.xaml")
-            {
-                cclib.Save("CCLib.xaml");
+                docc.ChildNodes[0].ChildNodes[ValuesListBox.SelectedIndex].ChildNodes[0].Value = label1.Text;
+                docc.Save("Colorful Words Master.xaml");
+                panel2.BackColor = ColorTranslator.FromHtml(label1.Text);
             }
 
-            label2.Text = "Color for " + listBox1.Text + " changed successfully!";
-            label2.ForeColor = currentcolor;
+
+
+
 
 
 
@@ -135,29 +128,7 @@ namespace ColorChanger
             }
         }
 
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (listBox1.SelectedIndex != -1)
-            {
-                selectedfile = "DefaultTheme.Colors.xaml";
-                if (listBox2.SelectedIndex != -1) { listBox2.SelectedIndex = -1; }
-            }
-            
 
-            if (!checkBox1.Checked)
-            {
-                LoadXAML.Text = "Set selected color as " + listBox1.Text;
-                mapindex = listBox1.SelectedIndex;
-            }
-            else
-            {
-                LoadXAML.Text = "Set selected to variable " + listBox1.Text;
-                mapindex = listBox1.SelectedIndex;
-                label1.Text = "{StaticResource " + listBox1.Text + "}";
-                label1.ForeColor = Color.Black;
-            }
-
-        }
 
         private void SavePresetButton_Click(object sender, EventArgs e)
         {
@@ -167,90 +138,52 @@ namespace ColorChanger
             }
             else
             {
-                using (ZipArchive zip = ZipFile.Open("CustomPresets\\" + PresetTextBox.Text + ".zip", ZipArchiveMode.Create))
-                {
-                    zip.CreateEntryFromFile("DefaultTheme.Colours.xaml", "DefaultTheme.Colours.xaml");
-                    zip.CreateEntryFromFile("CCLib.xaml", "CCLib.xaml");
-                    fuckoff.Text = "Saved preset " + PresetTextBox.Text + " to CustomPresets folder.";
-                }
+                MakePreset(PresetTextBox.Text);
             }
         }
 
         private void LoadPresetButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
-            ofd.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory + "CustomPresets";
-            DialogResult res = ofd.ShowDialog();
-            if (res == DialogResult.OK)
+            string fileContent = String.Empty;
+            string decoded;
+            string[] values = new string[20];
+            ofd.InitialDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            if (ofd.ShowDialog() == DialogResult.OK)
             {
-                using (ZipArchive zip = ZipFile.Open(ofd.FileName, ZipArchiveMode.Read))
-                    foreach (ZipArchiveEntry entry in zip.Entries)
-                    {
-                        if (entry.Name == "DefaultTheme.Colours.xaml")
-                        {
-                            if (File.Exists("DefaultTheme.Colours.xaml"))
-                            {
-                                File.Delete("DefaultTheme.Colours.xaml");
-                            }
-                            entry.ExtractToFile("DefaultTheme.Colours.xaml");
+                var fileStream = ofd.OpenFile();
 
-                        }
-                        if (entry.Name == "CCLib.xaml")
-                        {
-                            if (File.Exists("CCLib.xaml"))
-                            {
-                                File.Delete("CCLib.xaml");
-                            }
-                            entry.ExtractToFile("CCLib.xaml");
-
-                        }
-                    }
-
-                fuckoff.Text = "Loaded preset successfully!";
+                using (StreamReader reader = new StreamReader(fileStream))
+                {
+                    fileContent = reader.ReadToEnd();
+                }
+                decoded = Base64Decode(fileContent);
+                values = decoded.Split('#');
             }
+            var list = values.ToList();
+            list.RemoveAt(0);
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                list[i] = "#" + list[i].ToString();
+                docc.ChildNodes[0].ChildNodes[i].ChildNodes[0].Value = list[i];
+            }
+            docc.Save("Colorful Words Master.xaml");
+
         }
 
-        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (listBox2.SelectedIndex != -1)
-            {
-                selectedfile = "CCLib.xaml";
-                if (listBox1.SelectedIndex != -1) { listBox1.SelectedIndex = -1; }
-                mapindex = listBox2.SelectedIndex;
-            }
 
-            if (!checkBox1.Checked)
-            {
-                LoadXAML.Text = "Set selected color as " + listBox2.Text;
-                mapindex = listBox2.SelectedIndex;
-            }
-            else
-            {
-                LoadXAML.Text = "Set selected to variable " + listBox2.Text;
-                mapindex = listBox2.SelectedIndex;
-                label1.Text = "{StaticResource " + listBox2.Text + "}";
-                label1.ForeColor = Color.Black;
-            }
-        }
-
-        private void AdvancedCheckBox_CheckedChanged(object sender, EventArgs e)
+        private void ValuesListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (AdvancedCheckBox.Checked)
+            LoadXAML.Text = "Set selected color as " + ValuesListBox.Text;
+            try
             {
-                label6.Visible = true;
-                label9.Visible = true;
-                listBox1.Visible = true;
-                listBox2.Visible = true;
-                checkBox1.Visible = true;
+                Color fromhex = ColorTranslator.FromHtml(docc.ChildNodes[0].ChildNodes[ValuesListBox.SelectedIndex].ChildNodes[0].Value);
+                panel2.BackColor = fromhex;
             }
-            else
-            {
-                label6.Visible = false;
-                label9.Visible = false;
-                listBox1.Visible = false;
-                listBox2.Visible = false;
-                checkBox1.Visible = false;
-            }
+            catch { }   
+
+
         }
     }
 }

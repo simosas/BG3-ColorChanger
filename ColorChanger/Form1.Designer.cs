@@ -38,21 +38,17 @@
             this.ConvertToHex = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.SavePresetButton = new System.Windows.Forms.Button();
             this.LoadPresetButton = new System.Windows.Forms.Button();
             this.PresetTextBox = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.fuckoff = new System.Windows.Forms.Label();
-            this.listBox2 = new System.Windows.Forms.ListBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.AdvancedCheckBox = new System.Windows.Forms.CheckBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.listBox3 = new System.Windows.Forms.ListBox();
+            this.ValuesListBox = new System.Windows.Forms.ListBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label6 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // colorDialog1
@@ -84,14 +80,14 @@
             // 
             // LoadXAML
             // 
-            this.LoadXAML.BackColor = System.Drawing.Color.LightCyan;
+            this.LoadXAML.BackColor = System.Drawing.Color.Lavender;
             this.LoadXAML.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LoadXAML.ForeColor = System.Drawing.Color.Black;
             this.LoadXAML.Location = new System.Drawing.Point(12, 46);
             this.LoadXAML.Name = "LoadXAML";
-            this.LoadXAML.Size = new System.Drawing.Size(372, 52);
+            this.LoadXAML.Size = new System.Drawing.Size(441, 52);
             this.LoadXAML.TabIndex = 2;
-            this.LoadXAML.Text = "Set selected as PrimaryColor";
+            this.LoadXAML.Text = "Set selected color as ...";
             this.LoadXAML.UseVisualStyleBackColor = false;
             this.LoadXAML.Click += new System.EventHandler(this.LoadXAML_Click);
             // 
@@ -151,29 +147,6 @@
             this.label5.TabIndex = 9;
             this.label5.Text = "(example: #FF80FF)";
             // 
-            // listBox1
-            // 
-            this.listBox1.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 15;
-            this.listBox1.Location = new System.Drawing.Point(12, 604);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(231, 109);
-            this.listBox1.TabIndex = 10;
-            this.listBox1.Visible = false;
-            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(6, 577);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(231, 24);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "DefaultTheme.Colors vars:";
-            this.label6.Visible = false;
-            // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ControlText;
@@ -191,18 +164,6 @@
             this.label7.Size = new System.Drawing.Size(107, 20);
             this.label7.TabIndex = 13;
             this.label7.Text = "Color preview:";
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(240, 557);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(99, 17);
-            this.checkBox1.TabIndex = 14;
-            this.checkBox1.Text = "Use as variable";
-            this.checkBox1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.Visible = false;
             // 
             // SavePresetButton
             // 
@@ -249,38 +210,6 @@
             this.fuckoff.Size = new System.Drawing.Size(0, 13);
             this.fuckoff.TabIndex = 19;
             // 
-            // listBox2
-            // 
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.Location = new System.Drawing.Point(293, 604);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(241, 108);
-            this.listBox2.TabIndex = 20;
-            this.listBox2.Visible = false;
-            this.listBox2.SelectedIndexChanged += new System.EventHandler(this.listBox2_SelectedIndexChanged);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(330, 577);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(105, 24);
-            this.label9.TabIndex = 21;
-            this.label9.Text = "CCLib vars:";
-            this.label9.Visible = false;
-            // 
-            // AdvancedCheckBox
-            // 
-            this.AdvancedCheckBox.AutoSize = true;
-            this.AdvancedCheckBox.Location = new System.Drawing.Point(12, 525);
-            this.AdvancedCheckBox.Name = "AdvancedCheckBox";
-            this.AdvancedCheckBox.Size = new System.Drawing.Size(104, 17);
-            this.AdvancedCheckBox.TabIndex = 22;
-            this.AdvancedCheckBox.Text = "Advanced mode";
-            this.AdvancedCheckBox.UseVisualStyleBackColor = true;
-            this.AdvancedCheckBox.CheckedChanged += new System.EventHandler(this.AdvancedCheckBox_CheckedChanged);
-            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -291,37 +220,50 @@
             this.label10.TabIndex = 23;
             this.label10.Text = "Editable values:";
             // 
-            // listBox3
+            // ValuesListBox
             // 
-            this.listBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.listBox3.FormattingEnabled = true;
-            this.listBox3.ItemHeight = 20;
-            this.listBox3.Location = new System.Drawing.Point(40, 216);
-            this.listBox3.Name = "listBox3";
-            this.listBox3.Size = new System.Drawing.Size(203, 264);
-            this.listBox3.TabIndex = 24;
+            this.ValuesListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ValuesListBox.FormattingEnabled = true;
+            this.ValuesListBox.ItemHeight = 20;
+            this.ValuesListBox.Location = new System.Drawing.Point(40, 207);
+            this.ValuesListBox.Name = "ValuesListBox";
+            this.ValuesListBox.Size = new System.Drawing.Size(229, 404);
+            this.ValuesListBox.TabIndex = 24;
+            this.ValuesListBox.SelectedIndexChanged += new System.EventHandler(this.ValuesListBox_SelectedIndexChanged);
+            // 
+            // panel2
+            // 
+            this.panel2.Location = new System.Drawing.Point(40, 636);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(96, 34);
+            this.panel2.TabIndex = 25;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(40, 618);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(74, 13);
+            this.label6.TabIndex = 26;
+            this.label6.Text = "Color preview:";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Info;
+            this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(1275, 759);
-            this.Controls.Add(this.listBox3);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.ValuesListBox);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.AdvancedCheckBox);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.listBox2);
             this.Controls.Add(this.fuckoff);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.PresetTextBox);
             this.Controls.Add(this.LoadPresetButton);
             this.Controls.Add(this.SavePresetButton);
-            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.ConvertToHex);
@@ -350,21 +292,17 @@
         private System.Windows.Forms.Button ConvertToHex;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Button SavePresetButton;
         private System.Windows.Forms.Button LoadPresetButton;
         private System.Windows.Forms.TextBox PresetTextBox;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label fuckoff;
-        private System.Windows.Forms.ListBox listBox2;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.CheckBox AdvancedCheckBox;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.ListBox listBox3;
+        private System.Windows.Forms.ListBox ValuesListBox;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label label6;
     }
 }
 
